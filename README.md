@@ -1,33 +1,43 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# HuggingTracker
 
-## Getting Started
+HuggingTracker 是一个浏览器扩展程序，通过跟踪和突出显示您之前访问过的模型和空间，增强您的 Hugging Face 浏览体验。
 
-First, run the development server:
+## 功能特性
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
+- 自动记录您在 Hugging Face 上的浏览历史
+- 高亮显示您之前访问过的模型和空间
+- 提供您的 Hugging Face 探索概览
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+## 技术栈
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+- [Plasmo](https://www.plasmo.com/)：一个用于构建浏览器扩展的强大框架
+- [TailwindCSS](https://tailwindcss.com/)：一个实用为先的 CSS 框架，用于快速构建自定义用户界面
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
+## 安装
 
-## Making production build
+1. 克隆此仓库或下载 ZIP 文件
+2. 打开您的浏览器的扩展管理页面
+3. 启用"开发者模式"
+4. 点击"加载已解压的扩展程序"并选择扩展目录
 
-Run the following:
+## 使用方法
 
-```bash
-pnpm build
-# or
-npm run build
-```
+安装后，只需像往常一样浏览 Hugging Face。HuggingTracker 将：
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
+- 静默记录您访问的模型和空间
+- 为您之前查看过的项目添加视觉指示器
+- 让您快速识别您的浏览历史
 
-## Submit to the webstores
+## 贡献
 
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+欢迎贡献！请随时提交 Pull Request。
+
+## 许可证
+
+该项目采用 MIT 许可证 - 有关详细信息，请参阅 [LICENSE](LICENSE) 文件。
+
+## 致谢
+
+- 感谢 Hugging Face 提供了如此amazing的平台
+- 灵感来自于对更好地跟踪 AI 模型探索的需求
+- 使用 Plasmo 和 TailwindCSS 构建

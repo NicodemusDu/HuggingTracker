@@ -1,6 +1,6 @@
 {
-	"name": "huggingface-save",
-	"displayName": "Huggingface save",
+	"name": "huggingtracker",
+	"displayName": "HuggingTracker",
 	"version": "0.0.1",
 	"description": "A basic Plasmo extension.",
 	"author": "Nicodemus",
