@@ -10,6 +10,7 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@plasmohq/storage": "^1.12.0",
     "plasmo": "0.89.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -28,6 +29,14 @@
   "manifest": {
     "host_permissions": [
       "https://*/*"
-    ]
+    ],
+    "permissions": ["storage"],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "options_ui": {
+      "page": "history.html",
+      "open_in_tab": true
+    }
   }
 }
