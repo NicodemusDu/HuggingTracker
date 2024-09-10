@@ -1,39 +1,13 @@
-import { useEffect, useState } from "react";
-import { Storage } from "@plasmohq/storage";
-import type { SpaceData } from "./types";
-
-const storage = new Storage();
+import {} from "react";
+import { useSpaceData } from "~contexts/SpaceDataContext";
 
 function HistoryPage() {
-	const [history, setHistory] = useState<SpaceData[]>([]);
-
-	useEffect(() => {
-		const fetchHistory = async () => {
-			const allData = await storage.getAll();
-			const historyData = Object.entries(allData)
-				.map(([key, value]) => {
-					try {
-						const parsedValue = JSON.parse(value as string) as SpaceData;
-						return {
-							...parsedValue,
-							url: key,
-						};
-					} catch (e) {
-						console.error("Error parsing stored data:", e);
-						return null;
-					}
-				})
-				.filter((item): item is SpaceData => item !== null);
-			setHistory(historyData);
-		};
-
-		fetchHistory();
-	}, []);
+	const { spaceData: history } = useSpaceData();
 
 	return (
 		<div className="plasmo-p-4">
 			<h1 className="plasmo-text-2xl plasmo-font-bold plasmo-mb-4">浏览历史</h1>
-			{history.map((item) => (
+			{Object.entries(history).map(([spaceId, item]) => (
 				<div
 					key={item.url}
 					className="plasmo-bg-white plasmo-shadow plasmo-rounded-lg plasmo-p-4 plasmo-mb-4"

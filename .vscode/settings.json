@@ -16,9 +16,9 @@
 	],
 	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
-        "quickfix.biome": "explicit",
-        "source.organizeImports.biome": "explicit"
-    },
+		"quickfix.biome": "explicit",
+		"source.organizeImports.biome": "explicit"
+	},
 	"typescript.preferences.importModuleSpecifier": "shortest",
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"i18n-ally.localesPaths": ["apps/web/locales"],

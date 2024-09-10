@@ -1,53 +1,22 @@
-import { useEffect, useState } from "react";
-import { Storage } from "@plasmohq/storage";
+import { useState } from "react";
+import { SpaceDataProvider, useSpaceData } from "~contexts/SpaceDataContext";
 
 import "~style.css";
-import type { SpaceData } from "~features/types";
-
-const storage = new Storage();
 
 function IndexPopup() {
-	const [allData, setAllData] = useState<Record<string, SpaceData>>({});
-	const [isLoading, setIsLoading] = useState(true);
+	const { spaceData, clearAllData } = useSpaceData();
+
+	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-
-	const fetchAllData = async () => {
-		try {
-			setIsLoading(true);
-			const data = await storage.getAll();
-
-			const parsedData: Record<string, SpaceData> = {};
-
-			for (const [key, value] of Object.entries(data)) {
-				try {
-					if (typeof value === "string") {
-						parsedData[key] = JSON.parse(value) as SpaceData;
-					} else {
-						console.warn(`Unexpected data type for key ${key}:`, typeof value);
-					}
-				} catch (e) {
-					console.error(`Error parsing data for key ${key}:`, e);
-				}
-			}
-
-			setAllData(parsedData);
-		} catch (e) {
-			console.error("Error fetching data:", e);
-			setError("Failed to fetch data. Please try again.");
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	useEffect(() => {
-		fetchAllData();
-	}, []);
 
 	const handleClearAllData = async () => {
 		if (window.confirm("确定要清除所有数据吗？此操作不可撤销。")) {
 			try {
-				await storage.clear();
-				setAllData({});
+				chrome.runtime.sendMessage({
+					type: "DEBUG",
+					message: "清除数据",
+				});
+				await clearAllData();
 				alert("所有数据已清除");
 			} catch (e) {
 				console.error("Error clearing data:", e);
@@ -63,6 +32,7 @@ function IndexPopup() {
 			</h1>
 			<button
 				onClick={handleClearAllData}
+				type="button"
 				className="plasmo-bg-red-500 plasmo-text-white plasmo-px-4 plasmo-py-2 plasmo-rounded plasmo-mb-4 plasmo-hover:plasmo-bg-red-600 plasmo-transition-colors"
 			>
 				清除所有数据
@@ -71,10 +41,10 @@ function IndexPopup() {
 				<p>Loading...</p>
 			) : error ? (
 				<p className="plasmo-text-red-500">{error}</p>
-			) : Object.keys(allData).length === 0 ? (
+			) : Object.keys(spaceData).length === 0 ? (
 				<p>No data stored yet.</p>
 			) : (
-				Object.entries(allData).map(([spaceId, data]) => (
+				Object.entries(spaceData).map(([spaceId, data]) => (
 					<div
 						key={spaceId}
 						className="plasmo-mb-4 plasmo-bg-white plasmo-shadow plasmo-rounded-lg plasmo-p-4"
@@ -103,4 +73,12 @@ function IndexPopup() {
 	);
 }
 
-export default IndexPopup;
+function Popup() {
+	return (
+		<SpaceDataProvider>
+			<IndexPopup />
+		</SpaceDataProvider>
+	);
+}
+
+export default Popup;
